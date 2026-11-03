@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}{{ car }} - Your New Car{% endblock %}
+
+{% block content %}
+    <a href="{% url 'car_list' %}" class="small">Voltar para os anúncios</a>
+
+    <div class="row g-4 mt-1">
+        {# Coluna esquerda: fotos e descrição #}
+        <div class="col-xl-7">
+            {% with fotos=car.fotos.all %}
+                {% if fotos %}
+                    <div id="fotos-carro" class="carousel slide mb-4">
+                        <div class="carousel-inner rounded">
+                            {% for foto in fotos %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <div class="ratio ratio-4x3">
+                                        <img src="{{ foto.imagem.url }}" class="object-fit-cover" alt="{{ car }}, foto {{ forloop.counter }}">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if fotos|length > 1 %}
+                            <button class="carousel-control-prev" type="button" data-bs-target="#fotos-carro" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Foto anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#fotos-carro" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Próxima foto</span>
+                            </button>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="ratio ratio-4x3 mb-4">
+                        <div class="sem-foto rounded d-flex align-items-center justify-content-center">Este anúncio não tem fotos</div>
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <h2 class="h5">Descrição</h2>
+            {% if car.descricao %}
+                {{ car.descricao|linebreaks }}
+            {% else %}
+                <p class="text-secondary">O vendedor não incluiu uma descrição.</p>
+            {% endif %}
+        </div>
+
+        {# Coluna direita: dados, ações e contato #}
+        <div class="col-xl-5">
+            <div class="d-flex justify-content-between align-items-start gap-2">
+                <h1 class="h3">{{ car.get_marca_display }} {{ car.modelo }}</h1>
+                {% include 'partials/_favorito.html' %}
+            </div>
+            <p class="preco display-6">R$ {{ car.preco|floatformat:"2g" }}</p>
+
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between"><span>Ano</span><strong>{{ car.ano }}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Condição</span><strong>{% if car.usado %}Usado{% else %}Novo{% endif %}</strong></li>
+                {% if car.usado %}
+                    <li class="list-group-item d-flex justify-content-between"><span>Quilometragem</span><strong>{{ car.km_rodado|floatformat:"0g" }} km</strong></li>
+                {% endif %}
+                <li class="list-group-item d-flex justify-content-between"><span>Aceita troca</span><strong>{% if car.aceita_troca %}Sim{% else %}Não{% endif %}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Vendedor</span><strong>{{ car.vendedor.username }}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Publicado em</span><strong>{{ car.criado_em|date:"d/m/Y" }}</strong></li>
+            </ul>
+
+            {% if car.vendedor == user %}
+                <div class="d-flex gap-2 mb-3">
+                    <a href="{% url 'car_update' car.pk %}" class="btn btn-primary flex-grow-1">Editar anúncio</a>
+                    <a href="{% url 'car_delete' car.pk %}" class="btn btn-outline-danger">Excluir</a>
+                </div>
+            {% endif %}
+
+            <div class="card card-body">
+                <h2 class="h5">Fale com o vendedor</h2>
+                {% if not user.is_authenticated %}
+                    <p class="mb-0"><a href="{% url 'login' %}?next={{ request.path }}">Entre na sua conta</a> para enviar uma mensagem.</p>
+                {% elif car.vendedor == user %}
+                    <p class="text-secondary mb-0">Este anúncio é seu. As mensagens recebidas ficam em <a href="{% url 'mensagens' %}">Mensagens</a>.</p>
+                {% else %}
+                    <form method="post" action="{% url 'car_mensagem' car.pk %}">
+                        {% csrf_token %}
+                        <label class="visually-hidden" for="texto">Mensagem</label>
+                        <textarea class="form-control mb-3" id="texto" name="texto" rows="3" maxlength="1000"
+                                  placeholder="Olá, este carro ainda está disponível?" required></textarea>
+                        <button type="submit" class="btn btn-primary">Enviar mensagem</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

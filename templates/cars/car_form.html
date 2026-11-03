@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Editar anúncio{% else %}Anunciar carro{% endif %} - Your New Car{% endblock %}
+
+{% block content %}
+    <h1 class="h3 mb-4">{% if object %}Editar anúncio{% else %}Anunciar um carro{% endif %}</h1>
+
+    {# enctype é obrigatório para o envio das fotos #}
+    <form method="post" enctype="multipart/form-data" class="card card-body">
+        {% csrf_token %}
+        {% include 'partials/_form_fields.html' %}
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+                {% if object %}Salvar alterações{% else %}Publicar anúncio{% endif %}
+            </button>
+            <a href="{% if object %}{% url 'car_detail' object.pk %}{% else %}{% url 'car_list' %}{% endif %}"
+               class="btn btn-outline-light">Cancelar</a>
+        </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // Mostra o campo de quilometragem só quando o carro é usado
+        const usado = document.getElementById("id_usado");
+        const campoKm = document.getElementById("campo-km");
+
+        function atualizarKm() {
+            campoKm.hidden = !usado.checked;
+        }
+
+        usado.addEventListener("change", atualizarKm);
+        atualizarKm();
+    </script>
+{% endblock %}

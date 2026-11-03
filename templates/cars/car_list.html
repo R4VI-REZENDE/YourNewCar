@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Carros à venda - Your New Car{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Carros à venda</h1>
+        <span class="text-secondary small">{{ cars|length }} anúncio{{ cars|length|pluralize }}</span>
+    </div>
+
+    {% if cars %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
+            {% for car in cars %}
+                {% include 'partials/_car_card.html' %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-secondary">
+            Nenhum carro encontrado com esses filtros.
+            <a href="{% url 'car_list' %}">Limpar filtros</a>
+        </div>
+    {% endif %}
+{% endblock %}

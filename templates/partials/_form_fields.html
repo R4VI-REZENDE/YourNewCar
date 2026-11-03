@@ -1,0 +1,21 @@
+{# Renderiza todos os campos de um formulário ("form") já com o visual do Bootstrap. #}
+{% for erro in form.non_field_errors %}
+    <div class="alert alert-danger">{{ erro }}</div>
+{% endfor %}
+
+{% for field in form %}
+    <div class="mb-3" {% if field.name == "km_rodado" %}id="campo-km"{% endif %}>
+        {% if field.widget_type == "checkbox" %}
+            <div class="form-check">
+                {{ field }}
+                <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            </div>
+        {% else %}
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        {% endif %}
+
+        {% if field.help_text %}<div class="form-text">{{ field.help_text|safe }}</div>{% endif %}
+        {% for erro in field.errors %}<div class="text-danger small">{{ erro }}</div>{% endfor %}
+    </div>
+{% endfor %}

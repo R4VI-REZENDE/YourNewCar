@@ -1,0 +1,116 @@
+/* Tema: preto com destaque vinho, sobre o Bootstrap 5.3 em modo escuro.
+   Só sobrescreve variáveis do Bootstrap; nenhum componente novo. */
+
+:root {
+    --vinho: #8b1e3f;          /* botões, bordas de destaque */
+    --vinho-escuro: #6d1631;   /* hover e clique */
+    --vinho-claro: #e0708f;    /* textos e links (legíveis sobre preto) */
+    --superficie: #170d11;     /* fundo de cards, um preto com leve tom de vinho */
+    --linha: #33242b;
+}
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: #000;
+    --bs-body-color: #ececec;
+    --bs-border-color: var(--linha);
+    --bs-primary: var(--vinho);
+    --bs-primary-rgb: 139, 30, 63;
+    --bs-link-color: var(--vinho-claro);
+    --bs-link-color-rgb: 224, 112, 143;
+    --bs-link-hover-color: #f09ab2;
+    --bs-link-hover-color-rgb: 240, 154, 178;
+}
+
+/* Botões */
+.btn-primary {
+    --bs-btn-bg: var(--vinho);
+    --bs-btn-border-color: var(--vinho);
+    --bs-btn-hover-bg: var(--vinho-escuro);
+    --bs-btn-hover-border-color: var(--vinho-escuro);
+    --bs-btn-active-bg: var(--vinho-escuro);
+    --bs-btn-active-border-color: var(--vinho-escuro);
+    --bs-btn-disabled-bg: var(--vinho);
+    --bs-btn-disabled-border-color: var(--vinho);
+    --bs-btn-focus-shadow-rgb: 139, 30, 63;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--vinho-claro);
+    --bs-btn-border-color: var(--vinho);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--vinho);
+    --bs-btn-hover-border-color: var(--vinho);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--vinho-escuro);
+    --bs-btn-active-border-color: var(--vinho-escuro);
+    --bs-btn-focus-shadow-rgb: 139, 30, 63;
+}
+
+/* Barra de navegação: a linha vinho embaixo é o destaque da página */
+.navbar-vinho {
+    border-bottom: 2px solid var(--vinho);
+    --bs-navbar-active-color: var(--vinho-claro);
+}
+
+/* Cards, listas e formulários */
+.card {
+    --bs-card-bg: var(--superficie);
+    --bs-card-border-color: var(--linha);
+}
+
+.list-group {
+    --bs-list-group-bg: var(--superficie);
+    --bs-list-group-border-color: var(--linha);
+}
+
+.nav-pills {
+    --bs-nav-pills-link-active-bg: var(--vinho);
+    --bs-nav-pills-link-active-color: #fff;
+}
+
+.form-control,
+.form-select {
+    background-color: #000;
+    border-color: #4a3640;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #000;
+    border-color: var(--vinho-claro);
+    box-shadow: 0 0 0 0.25rem rgba(139, 30, 63, 0.45);
+}
+
+.form-check-input {
+    border-color: #4a3640;
+}
+
+.form-check-input:checked {
+    background-color: var(--vinho);
+    border-color: var(--vinho);
+}
+
+.form-check-input:focus {
+    border-color: var(--vinho-claro);
+    box-shadow: 0 0 0 0.25rem rgba(139, 30, 63, 0.45);
+}
+
+.form-text ul {
+    padding-left: 1.1rem;
+    margin-bottom: 0;
+}
+
+/* Detalhes dos anúncios */
+.preco {
+    color: var(--vinho-claro);
+    font-weight: 700;
+}
+
+.sem-foto {
+    background-color: #241820;
+    color: #8f7f87;
+}
+
+.car-card:hover {
+    border-color: var(--vinho);
+}

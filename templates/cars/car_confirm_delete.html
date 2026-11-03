@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Excluir anúncio - Your New Car{% endblock %}
+
+{% block content %}
+    <div class="card card-body">
+        <h1 class="h4">Excluir este anúncio?</h1>
+        <p>O anúncio <strong>{{ object }}</strong> será apagado junto com suas fotos, favoritos e mensagens. Essa ação não pode ser desfeita.</p>
+
+        <form method="post" class="d-flex gap-2">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Excluir anúncio</button>
+            <a href="{% url 'car_detail' object.pk %}" class="btn btn-outline-light">Cancelar</a>
+        </form>
+    </div>
+{% endblock %}

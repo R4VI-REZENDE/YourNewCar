@@ -1,0 +1,14 @@
+{# Botão de favoritar. Espera a variável "car" no contexto. #}
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'car_favoritar' car.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm btn-outline-primary"
+                title="{% if car.pk in favoritos_ids %}Remover dos favoritos{% else %}Adicionar aos favoritos{% endif %}"
+                aria-label="{% if car.pk in favoritos_ids %}Remover dos favoritos{% else %}Adicionar aos favoritos{% endif %}">
+            {% if car.pk in favoritos_ids %}&hearts;{% else %}&#9825;{% endif %}
+        </button>
+    </form>
+{% else %}
+    <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-sm btn-outline-primary"
+       title="Entre para favoritar" aria-label="Entre para favoritar">&#9825;</a>
+{% endif %}

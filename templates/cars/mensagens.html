@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Mensagens - Your New Car{% endblock %}
+
+{% block content %}
+    <h1 class="h3 mb-3">Mensagens</h1>
+
+    <ul class="nav nav-pills mb-3" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#recebidas">
+                Recebidas <span class="badge text-bg-secondary">{{ recebidas|length }}</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#enviadas">
+                Enviadas <span class="badge text-bg-secondary">{{ enviadas|length }}</span>
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="recebidas" role="tabpanel">
+            {% if recebidas %}
+                <div class="list-group">
+                    {% for m in recebidas %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between flex-wrap gap-1">
+                                <span>
+                                    <strong>{{ m.remetente.username }}</strong> escreveu sobre
+                                    <a href="{% url 'car_detail' m.carro.pk %}">{{ m.carro }}</a>
+                                </span>
+                                <small class="text-secondary">{{ m.enviada_em|date:"d/m/Y H:i" }}</small>
+                            </div>
+                            <p class="mb-0 mt-2">{{ m.texto|linebreaksbr }}</p>
+                            {% if not m.lida %}<span class="badge text-bg-primary mt-2">Nova</span>{% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-secondary">Ninguém escreveu para os seus anúncios ainda.</div>
+            {% endif %}
+        </div>
+
+        <div class="tab-pane fade" id="enviadas" role="tabpanel">
+            {% if enviadas %}
+                <div class="list-group">
+                    {% for m in enviadas %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between flex-wrap gap-1">
+                                <span>
+                                    Para <strong>{{ m.carro.vendedor.username }}</strong> sobre
+                                    <a href="{% url 'car_detail' m.carro.pk %}">{{ m.carro }}</a>
+                                </span>
+                                <small class="text-secondary">{{ m.enviada_em|date:"d/m/Y H:i" }}</small>
+                            </div>
+                            <p class="mb-0 mt-2">{{ m.texto|linebreaksbr }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-secondary">
+                    Você ainda não enviou mensagens. Abra um anúncio e use o campo "Fale com o vendedor".
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

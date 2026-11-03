@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Meus favoritos - Your New Car{% endblock %}
+
+{% block content %}
+    <h1 class="h3 mb-3">Meus favoritos</h1>
+
+    {% if cars %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
+            {% for car in cars %}
+                {% include 'partials/_car_card.html' %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-secondary">
+            Você ainda não favoritou nenhum carro. Use o botão de coração nos anúncios para guardá-los aqui.
+            <a href="{% url 'car_list' %}">Ver anúncios</a>
+        </div>
+    {% endif %}
+{% endblock %}

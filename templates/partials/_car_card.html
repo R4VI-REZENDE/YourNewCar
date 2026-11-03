@@ -1,0 +1,34 @@
+{# Card de um carro. Espera a variável "car" no contexto. #}
+<div class="col">
+    <div class="card car-card h-100">
+        {% with foto=car.fotos.all.0 %}
+            <div class="ratio ratio-4x3">
+                {% if foto %}
+                    <img src="{{ foto.imagem.url }}" class="card-img-top object-fit-cover" alt="{{ car }}">
+                {% else %}
+                    <div class="sem-foto card-img-top d-flex align-items-center justify-content-center">Sem foto</div>
+                {% endif %}
+            </div>
+        {% endwith %}
+
+        <div class="card-body d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2">
+                <h2 class="h6 mb-1">{{ car.get_marca_display }} {{ car.modelo }}</h2>
+                <span class="badge text-bg-primary">{% if car.usado %}Usado{% else %}Novo{% endif %}</span>
+            </div>
+
+            <div class="d-flex gap-3 small text-secondary mb-2">
+                <span>{{ car.ano }}</span>
+                {% if car.usado %}<span>{{ car.km_rodado|floatformat:"0g" }} km</span>{% endif %}
+                {% if car.aceita_troca %}<span>Aceita troca</span>{% endif %}
+            </div>
+
+            <p class="preco fs-5 mb-3">R$ {{ car.preco|floatformat:"2g" }}</p>
+
+            <div class="mt-auto d-flex gap-2">
+                <a href="{% url 'car_detail' car.pk %}" class="btn btn-primary btn-sm flex-grow-1">Ver detalhes</a>
+                {% include 'partials/_favorito.html' %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your New Car{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'cars/css/style.css' %}">
+</head>
+<body class="bg-black d-flex flex-column min-vh-100">
+    {% include 'partials/_navbar.html' %}
+
+    <div class="container py-4 flex-grow-1">
+        <div class="row g-4">
+            <aside class="col-lg-3">
+                {% include 'partials/_sidebar.html' %}
+            </aside>
+
+            <main class="col-lg-9">
+                {% for message in messages %}
+                    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                    </div>
+                {% endfor %}
+
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    {% include 'partials/_footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"
+            defer></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

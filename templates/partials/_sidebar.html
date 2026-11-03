@@ -1,0 +1,62 @@
+{# Botão que só aparece no celular/tablet e abre/fecha os filtros #}
+<button class="btn btn-outline-light w-100 d-lg-none mb-3" type="button"
+        data-bs-toggle="collapse" data-bs-target="#filtros"
+        aria-expanded="false" aria-controls="filtros">
+    Filtrar anúncios
+</button>
+
+<div class="collapse d-lg-block" id="filtros">
+    <form method="get" action="{% url 'car_list' %}" class="card card-body">
+        <h2 class="h5 mb-3">Filtros</h2>
+
+        <div class="mb-3">
+            <label class="form-label" for="f-usado">Condição</label>
+            <select class="form-select" id="f-usado" name="usado">
+                <option value="">Novo e usado</option>
+                <option value="0" {% if request.GET.usado == '0' %}selected{% endif %}>Novo</option>
+                <option value="1" {% if request.GET.usado == '1' %}selected{% endif %}>Usado</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="f-marca">Marca</label>
+            <select class="form-select" id="f-marca" name="marca">
+                <option value="">Todas as marcas</option>
+                {% for valor, nome in marcas %}
+                    <option value="{{ valor }}" {% if request.GET.marca == valor %}selected{% endif %}>{{ nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="f-preco-min">Preço (R$)</label>
+            <div class="row g-2">
+                <div class="col-6">
+                    <input type="number" min="0" class="form-control" id="f-preco-min" name="preco_min"
+                           placeholder="Mínimo" value="{{ request.GET.preco_min }}">
+                </div>
+                <div class="col-6">
+                    <input type="number" min="0" class="form-control" id="f-preco-max" name="preco_max"
+                           placeholder="Máximo" value="{{ request.GET.preco_max }}" aria-label="Preço máximo">
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="f-ano-min">Ano</label>
+            <div class="row g-2">
+                <div class="col-6">
+                    <input type="number" min="1900" class="form-control" id="f-ano-min" name="ano_min"
+                           placeholder="De" value="{{ request.GET.ano_min }}">
+                </div>
+                <div class="col-6">
+                    <input type="number" min="1900" class="form-control" id="f-ano-max" name="ano_max"
+                           placeholder="Até" value="{{ request.GET.ano_max }}" aria-label="Ano máximo">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Aplicar filtros</button>
+        <a href="{% url 'car_list' %}" class="btn btn-link w-100 mt-1">Limpar filtros</a>
+    </form>
+</div>
