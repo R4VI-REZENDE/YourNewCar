@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-black navbar-vinho">
-    <div class="container">
+    <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="{% url 'car_list' %}">Your New Car</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -16,6 +16,10 @@
                 <li class="nav-item">
                     <a class="nav-link {% if request.resolver_match.url_name == 'car_create' %}active{% endif %}"
                        href="{% url 'car_create' %}">Anunciar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'meus_anuncios' %}active{% endif %}"
+                       href="{% url 'meus_anuncios' %}">Meus anúncios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.resolver_match.url_name == 'favoritos' %}active{% endif %}"

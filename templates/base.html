@@ -15,13 +15,15 @@
 <body class="bg-black d-flex flex-column min-vh-100">
     {% include 'partials/_navbar.html' %}
 
-    <div class="container py-4 flex-grow-1">
-        <div class="row g-4">
-            <aside class="col-lg-3">
-                {% include 'partials/_sidebar.html' %}
+    <div class="container-fluid flex-grow-1">
+        <div class="row g-0">
+            <aside class="col-lg-3 col-xl-2 sidebar">
+                <div class="sidebar-conteudo p-3">
+                    {% include 'partials/_sidebar.html' %}
+                </div>
             </aside>
 
-            <main class="col-lg-9">
+            <main class="col-lg-9 col-xl-10 p-3 p-lg-4">
                 {% for message in messages %}
                     <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
                         {{ message }}

@@ -29,6 +29,14 @@
                 <a href="{% url 'car_detail' car.pk %}" class="btn btn-primary btn-sm flex-grow-1">Ver detalhes</a>
                 {% include 'partials/_favorito.html' %}
             </div>
+
+            {# "dono" é passado só pela página Meus anúncios #}
+            {% if dono %}
+                <div class="d-flex gap-2 mt-2">
+                    <a href="{% url 'car_update' car.pk %}" class="btn btn-outline-light btn-sm flex-grow-1">Editar</a>
+                    <a href="{% url 'car_delete' car.pk %}" class="btn btn-outline-danger btn-sm flex-grow-1">Excluir</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

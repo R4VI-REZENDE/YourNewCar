@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-from .models import Car, FotoCarro
+from .models import Car, FotoCarro, Perfil
 
 
 class BootstrapMixin:
@@ -64,5 +64,27 @@ class LoginForm(BootstrapMixin, AuthenticationForm):
     pass
 
 
+class TelInput(forms.TextInput):
+    input_type = "tel"
+
+
 class RegisterForm(BootstrapMixin, UserCreationForm):
-    pass
+    telefone = forms.CharField(
+        label="Telefone com DDD",
+        max_length=20,
+        widget=TelInput(attrs={"placeholder": "(67) 99999-9999"}),
+    )
+    field_order = ["username", "telefone", "password1", "password2"]
+
+    def clean_telefone(self):
+        # guarda só os números, aceitando "(67) 99999-9999", "67999999999" etc.
+        numeros = "".join(c for c in self.cleaned_data["telefone"] if c.isdigit())
+        if len(numeros) not in (10, 11):
+            raise forms.ValidationError("Informe o telefone com DDD, com 10 ou 11 números.")
+        return numeros
+
+    def save(self, commit=True):
+        usuario = super().save(commit)
+        if commit:
+            Perfil.objects.create(usuario=usuario, telefone=self.cleaned_data["telefone"])
+        return usuario

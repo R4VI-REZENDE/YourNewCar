@@ -6,12 +6,12 @@
 </button>
 
 <div class="collapse d-lg-block" id="filtros">
-    <form method="get" action="{% url 'car_list' %}" class="card card-body">
+    <form method="get" action="{% url 'car_list' %}">
         <h2 class="h5 mb-3">Filtros</h2>
 
         <div class="mb-3">
             <label class="form-label" for="f-usado">Condição</label>
-            <select class="form-select" id="f-usado" name="usado">
+            <select class="form-select" id="f-usado" name="usado" onchange="this.form.submit()">
                 <option value="">Novo e usado</option>
                 <option value="0" {% if request.GET.usado == '0' %}selected{% endif %}>Novo</option>
                 <option value="1" {% if request.GET.usado == '1' %}selected{% endif %}>Usado</option>
@@ -20,7 +20,7 @@
 
         <div class="mb-3">
             <label class="form-label" for="f-marca">Marca</label>
-            <select class="form-select" id="f-marca" name="marca">
+            <select class="form-select" id="f-marca" name="marca" onchange="this.form.submit()">
                 <option value="">Todas as marcas</option>
                 {% for valor, nome in marcas %}
                     <option value="{{ valor }}" {% if request.GET.marca == valor %}selected{% endif %}>{{ nome }}</option>

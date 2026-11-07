@@ -78,6 +78,14 @@ class CarDeleteView(DonoMixin, SuccessMessageMixin, DeleteView):
     success_message = "Anúncio excluído."
 
 
+class MeusAnunciosListView(LoginRequiredMixin, ListView):
+    template_name = "cars/meus_anuncios.html"
+    context_object_name = "cars"
+
+    def get_queryset(self):
+        return Car.objects.filter(vendedor=self.request.user).prefetch_related("fotos")
+
+
 # ------------------------------------------------------------- Favoritos
 class FavoritoListView(LoginRequiredMixin, ListView):
     template_name = "cars/favoritos.html"

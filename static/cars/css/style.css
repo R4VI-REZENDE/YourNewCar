@@ -114,3 +114,24 @@
 .car-card:hover {
     border-color: var(--vinho);
 }
+
+/* Barra lateral: ocupa toda a altura, colada na esquerda; no desktop os filtros
+   acompanham a rolagem da página. No celular ela vira um bloco acima da lista. */
+.sidebar {
+    background-color: var(--superficie);
+    border-bottom: 1px solid var(--linha);
+}
+
+@media (min-width: 992px) {
+    .sidebar {
+        border-bottom: 0;
+        border-right: 1px solid var(--linha);
+    }
+
+    .sidebar-conteudo {
+        position: sticky;
+        top: 0;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Meus anúncios - Your New Car{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Meus anúncios</h1>
+        <a href="{% url 'car_create' %}" class="btn btn-primary btn-sm">Novo anúncio</a>
+    </div>
+
+    {% if cars %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 row-cols-xxl-4 g-4">
+            {% for car in cars %}
+                {% include 'partials/_car_card.html' with dono=True %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-secondary">
+            Você ainda não anunciou nenhum carro.
+            <a href="{% url 'car_create' %}">Anunciar agora</a>
+        </div>
+    {% endif %}
+{% endblock %}
