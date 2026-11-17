@@ -12,3 +12,9 @@ Aprimoramentos e Adições Futuras:
 vender seus carros também pelo site da YNC sem taxas adicionais
 - Aprimoramento das conversas por chat entre usuários
 - Função de gráficos interativos a respeito dos dados de vendas e carros do usuário e/ou site
+
+- Integrantes do Projeto:
+- Franz Trefzger | Git: FranzzTN
+- Ravi Rezende Abrão | Git: R4VI-REZENDE
+- Daniel Virgilio | Git: deletccc
+- Caio Fábio Oliveira | Git: caio1609tlaes-pixel
